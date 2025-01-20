@@ -2,6 +2,7 @@
 	"name": "@ontario-lrc/api-service",
 	"version": "1.0.0-b.0",
 	"description": "This Angular library is designed to be a service that handles CRUD (create, read, update, delete) for a variety of resources. This service can be extended to include additional endpoints or custom functionalities as needed.",
+	"private": false,
 	"peerDependencies":
 	{
 		"@angular/common": ">=4.3.0",
@@ -13,5 +14,26 @@
 	{
 		"tslib": ">=1.7.0"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"publishConfig":
+	{
+		"access": "public"
+	},
+	"authors":
+	[
+		{
+			"name": "Dawid Kasperowicz",
+			"email": "dawid.kasperowicz@ontario.ca"
+		}
+	],
+	"repository":
+	{
+		"type": "git",
+		"url": "git+https://github.com/ontario-lrc/api-service.git"
+	},
+	"bugs":
+	{
+		"url": "https://github.com/ontario-lrc/api-service/issues"
+	},
+	"homepage": "https://github.com/ontario-lrc/api-service#readme"
 }

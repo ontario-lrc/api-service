@@ -10,6 +10,11 @@
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test"
 	},
+	"files":
+	[
+		"dist/api-service",
+		"README.md"
+	],
 	"dependencies": {
 		"@angular/animations": "^19.1.0",
 		"@angular/common": ">=4.3.0",
@@ -36,5 +41,26 @@
 		"karma-jasmine-html-reporter": "~2.1.0",
 		"ng-packagr": "^19.1.0",
 		"typescript": "~5.7.2"
-	}
+	},
+	"publishConfig":
+	{
+		"access": "public"
+	},
+	"authors":
+	[
+		{
+			"name": "Dawid Kasperowicz",
+			"email": "dawid.kasperowicz@ontario.ca"
+		}
+	],
+	"repository":
+	{
+		"type": "git",
+		"url": "git+https://github.com/ontario-lrc/api-service.git"
+	},
+	"bugs":
+	{
+		"url": "https://github.com/ontario-lrc/api-service/issues"
+	},
+	"homepage": "https://github.com/ontario-lrc/api-service#readme"
 }
