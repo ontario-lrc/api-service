@@ -48,10 +48,10 @@ jobs:
         name: api-service--artifact
         path: api-service
 
-    - name: Show artifact directory contents
-      run: |
-        cd api-service
-        ls
+    # - name: Show artifact directory contents
+    #   run: |
+    #     cd api-service
+    #     ls
 
     - name: Create tarbal
       run: tar -zcvf api-service.tar.gz api-service
