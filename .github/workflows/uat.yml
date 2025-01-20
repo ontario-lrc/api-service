@@ -42,9 +42,6 @@ jobs:
     permissions: write-all
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
@@ -81,26 +78,17 @@ jobs:
         node-version: 18.x
         registry-url: "https://registry.npmjs.org"
 
-    # - name: Checkout
-    #   uses: actions/checkout@v3
-
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: api-service--artifact
         path: api-service
 
-    - name: Show artifact directory contents
+    - name: Pack for NPM and publish to NPM
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
       run: |
         cd api-service
         ls
-
-    - name: Pack for NPM
-      run: |
-        cd api-service
         npm pack
-
-    # - name: Publish to NPM
-    #   env:
-    #     NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
-    #   run: npm publish --tag prerelease --access public
+        npm publish --tag prerelease --access public
