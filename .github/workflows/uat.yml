@@ -59,10 +59,10 @@ jobs:
     - name: Create tarbal
       run: tar -zcvf api-service.tar.gz api-service
 
-    - name: Delete previous pre-release
-      env:
-        GH_TOKEN: ${{github.token}}
-      run: gh release delete prerelease --yes
+    # - name: Delete previous pre-release
+    #   env:
+    #     GH_TOKEN: ${{github.token}}
+    #   run: gh release delete prerelease --yes
 
     - name: Make a new release with tarbal
       env:
