@@ -81,8 +81,8 @@ jobs:
         node-version: 18.x
         registry-url: "https://registry.npmjs.org"
 
-    - name: Checkout
-      uses: actions/checkout@v3
+    # - name: Checkout
+    #   uses: actions/checkout@v3
 
     - name: Download artifact
       uses: actions/download-artifact@v4
@@ -96,7 +96,9 @@ jobs:
         ls
 
     - name: Pack for NPM
-      run: npm pack
+      run: |
+        cd api-service
+        npm pack
 
     # - name: Publish to NPM
     #   env:
