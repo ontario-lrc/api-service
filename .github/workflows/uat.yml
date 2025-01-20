@@ -69,14 +69,31 @@ jobs:
         GH_TOKEN: ${{github.token}}
       run: gh release create prerelease api-service.tar.gz --notes-file changelog.md --prerelease
 
-#   publish:
-#     needs: [build, release]
-#     runs-on: ubuntu-latest
-#     permissions: write-all
+  publish:
+    needs: [build, release]
+    runs-on: ubuntu-latest
+    permissions: write-all
 
-#     steps:
-#     - name: Use NodeJS 18.x
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: 18.x
-#         registry-url: "https://registry.npmjs.org"
+    steps:
+    - name: Use NodeJS 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        registry-url: "https://registry.npmjs.org"
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: api-service--artifact
+        path: api-service
+
+    - name: Pack for NPM
+      run: npm pack
+
+    - name: Publish to NPM
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
+      run: npm publish --tag prerelease --access public
