@@ -56,6 +56,19 @@ jobs:
         cd api-service
         ls
 
+    - name: Create tarbal
+      run: tar -zcvf api-service.tar.gz api-service
+
+    - name: Delete previous pre-release
+      env:
+        GH_TOKEN: ${{github.token}}
+      run: gh release delete prerelease --yes
+
+    - name: Make a new release with tarbal
+      env:
+        GH_TOKEN: ${{github.token}}
+      run: gh release create prerelease api-service.tar.gz --notes-file changelog.md --prerelease
+
 #   publish:
 #     needs: [build, release]
 #     runs-on: ubuntu-latest
