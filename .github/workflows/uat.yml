@@ -29,10 +29,10 @@ jobs:
     - name: Build projects in library
       run: npm run build api --configuration=production
 
-    - name: Delete previous pre-release
-      env:
-        GH_TOKEN: ${{github.token}}
-      run: gh release delete prerelease --yes
+    # - name: Delete previous pre-release
+    #   env:
+    #     GH_TOKEN: ${{github.token}}
+    #   run: gh release delete prerelease --yes
 
     # - name: Upload artifact
     #   uses: actions/upload-artifact@v4
