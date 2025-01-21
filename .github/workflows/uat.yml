@@ -93,5 +93,6 @@ jobs:
       env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
       run: |
-        npm pack ./dist/api-service
+        cd dist/api-service
+        npm pack
         npm publish --tag prerelease --access public
