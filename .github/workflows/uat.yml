@@ -81,11 +81,14 @@ jobs:
         node-version: 18.x
         registry-url: "https://registry.npmjs.org"
 
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: api-service--artifact
-        path: api-service
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Perform clean install
+      run: npm ci
+
+    - name: Build projects in library
+      run: npm run build api --configuration=production
 
     - name: Show artifact directory contents
       run: |
@@ -96,6 +99,5 @@ jobs:
       env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
       run: |
-        cd api-service
-        npm pack
+        npm pack ./dist/api-service
         npm publish --tag prerelease --access public

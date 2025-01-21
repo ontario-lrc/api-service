@@ -2,6 +2,7 @@
 	"name": "api-service",
 	"version": "0.0.0",
 	"description": "Workspace contianing the Angular library api-service.",
+	"license": "Apache-2.0",
 	"private": false,
 	"scripts": {
 		"ng": "ng",
@@ -13,7 +14,8 @@
 	"files":
 	[
 		"dist/api-service",
-		"README.md"
+		"README.md",
+		"LICENSE"
 	],
 	"dependencies": {
 		"@angular/animations": "^19.1.0",
