@@ -92,10 +92,10 @@ jobs:
         cd api-service
         ls
 
-    - name: Pack for NPM
+    - name: Pack for NPM and publish to NPM
+      env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
       run: |
         cd api-service
         npm pack
-
-    - name: Show directory contents
-      run: ls
+        npm publish --tag prerelease --access public
