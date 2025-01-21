@@ -1,15 +1,16 @@
 {
 	"name": "@ontario-lrc/api-service",
-	"version": "1.0.0-b.3",
+	"version": "1.0.0-b.4",
 	"description": "This Angular library is designed to be a service that handles CRUD (create, read, update, delete) for a variety of resources. This service can be extended to include additional endpoints or custom functionalities as needed.",
 	"license": "Apache-2.0",
 	"private": false,
 	"peerDependencies":
 	{
-		"@angular/common": ">=4.3.0",
-		"@angular/core": ">=4.3.0",
-		"rxjs": ">=5.5.0",
-		"zone.js": ">=0.8.4"
+		"@angular/common": ">=12.0.0",
+		"@angular/core": ">=12.0.0",
+		"rxjs": ">=6.5.0",
+		"zone.js": ">=0.11.4",
+		"typescript": ">=4.1.5"
 	},
 	"dependences":
 	{
