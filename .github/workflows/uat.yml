@@ -27,8 +27,7 @@ jobs:
       run: npm ci
 
     - name: Build projects in library
-      run: |
-       npm run build api --configuration=production
+      run: npm run build api --configuration=production
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -89,11 +88,6 @@ jobs:
 
     - name: Build projects in library
       run: npm run build api --configuration=production
-
-    - name: Show artifact directory contents
-      run: |
-        cd api-service
-        ls
 
     - name: Pack for NPM and publish to NPM
       env:
