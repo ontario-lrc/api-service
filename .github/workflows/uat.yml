@@ -11,7 +11,7 @@ on:
     branches: ["UAT"]
 
 jobs:
-  build-release-publish:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,84 +29,69 @@ jobs:
     - name: Build projects in library
       run: npm run build api --configuration=production
 
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-service--artifact
+        path: dist/api-service
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: api-service--artifact
+        path: api-service
+
+    - name: Show artifact directory contents
+      run: |
+        cd api-service
+        ls
+
+    - name: Create tarbal
+      run: tar -zcvf api-service.tar.gz api-service
+
     # - name: Delete previous pre-release
     #   env:
     #     GH_TOKEN: ${{github.token}}
     #   run: gh release delete prerelease --yes
 
-    # - name: Upload artifact
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: api-service--artifact
-    #     path: dist/api-service
-
-    - name: Create release and publish to NPM
+    - name: Make a new release with tarbal
       env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
+        GH_TOKEN: ${{github.token}}
+      run: gh release create prerelease api-service.tar.gz --notes-file changelog.md --prerelease
+
+  publish:
+    needs: [build, release]
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+    - name: Use NodeJS 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        registry-url: "https://registry.npmjs.org"
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Perform clean install
+      run: npm ci
+
+    - name: Build projects in library
+      run: npm run build api --configuration=production
+
+    - name: Pack for NPM and publish to NPM
+      env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
       run: |
         cd dist/api-service
-        tar -zcvf api-service.tar.gz api-service
-        gh release create prerelease api-service.tar.gz --notes-file changelog.md --prerelease
-        rm api-service.tar.gz
         npm publish --tag prerelease --access public
-
-#   release:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     permissions: write-all
-
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v3
-
-#     - name: Download artifact
-#       uses: actions/download-artifact@v4
-#       with:
-#         name: api-service--artifact
-#         path: api-service
-
-#     - name: Show artifact directory contents
-#       run: |
-#         cd api-service
-#         ls
-
-#     - name: Create tarbal
-#       run: tar -zcvf api-service.tar.gz api-service
-
-#     - name: Delete previous pre-release
-#       env:
-#         GH_TOKEN: ${{github.token}}
-#       run: gh release delete prerelease --yes
-
-#     - name: Make a new release with tarbal
-#       env:
-#         GH_TOKEN: ${{github.token}}
-#       run: gh release create prerelease api-service.tar.gz --notes-file changelog.md --prerelease
-
-#   publish:
-#     needs: [build, release]
-#     runs-on: ubuntu-latest
-#     permissions: write-all
-
-#     steps:
-#     - name: Use NodeJS 18.x
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: 18.x
-#         registry-url: "https://registry.npmjs.org"
-
-#     - name: Checkout
-#       uses: actions/checkout@v3
-
-#     - name: Perform clean install
-#       run: npm ci
-
-#     - name: Build projects in library
-#       run: npm run build api --configuration=production
-
-#     - name: Pack for NPM and publish to NPM
-#       env:
-#           NODE_AUTH_TOKEN: ${{secrets.NPM_ONTARIOLRC_APISERVICE}}
-#       run: |
-#         cd dist/api-service
-#         npm publish --tag prerelease --access public
