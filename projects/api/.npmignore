@@ -1,0 +1,5 @@
+# Nested package.json's are only needed for development.
+**/package.json
+
+#Ignore all .tgz files
+*.tgz
